@@ -3,7 +3,8 @@ var an = 45; //angulob
 var c = 0; //angulo brazo derecho
 var d = 0; //angulo brazo izquierdo
 var factorTraslado = 320
-var t = 270
+var t = 270 // angulo translate
+var velocidadT = 0.8 // velocidad angulo translate
 var b;
 var factor1 = 8;
 var factor2 = 20
@@ -15,6 +16,16 @@ var headR = 255
 var headG = 255
 var headB = 255
 
+var ran1 = 0
+var ran2 = 0
+var ran3 = 0
+var ran4 = 0
+var ran5 = 0
+var ran6 = 0
+
+var frame = 60
+
+
 function preload() {
   imevri = loadSound("imevri1.mp3")
   dance = loadSound("dance1.mp3")
@@ -22,24 +33,35 @@ function preload() {
 }
 
 function setup() {
+
   createCanvas(900, 600)
   angleMode(DEGREES)
+  noLoop()
 
 }
 
 function draw() {
+frameRate(frame)
+    //variables para brazos y pies
   var factor = 0;
   var factorb = 0;
   var factorc = 0
   var factord = 0
   var e = 0
   var f = 0
+
+
   background(b1, b2, b3)
-  fill(165, 42, 202, 100)
+  b1 = random(ran1, ran2)
+  b2 = random(ran3, ran4)
+  b3 = random(ran5, ran6)
+
+
+  fill(165, 42, 202)
   rect(125, 50, 150, 100)
-  fill(42, 202, 165, 100)
+  fill(42, 202, 165)
   rect(375, 50, 150, 100)
-  fill(202, 165, 42, 100)
+  fill(202, 165, 42)
   rect(625, 50, 150, 100)
 
   // if (125 < mouseX && mouseX < 275 && 50 < mouseY && mouseY < 150 && mouseIsPressed) {
@@ -57,16 +79,17 @@ function draw() {
   //}
 
   // trasladar canvas
+
   translate(b, 0);
   b = 380 + sin(t) * factorTraslado
-  t += 0.8
+  t += velocidadT
 
 
 
   strokeWeight(5)
 
   //cabeza, tronco
-  fill(headR, headG, headB, 100)
+  fill(headR, headG, headB)
   ellipse(80, 250, 60, 60)
   noFill()
   line(80, 280, 80, 400)
@@ -125,17 +148,38 @@ function mousePressed() {
     imevri.play();
     will.stop();
     dance.stop();
+    velocidadT = 4.5
     headR = 165
     headG = 42
     headB = 202
+
+    ran1 = 100
+    ran2 = 255
+    ran3 = 0
+    ran4 = 100
+    
+    ran5 = 0
+    ran6 = 100
+    frame = 40
+
+
+    loop()
 
   } else if (375 < mouseX && mouseX < 525 && 50 < mouseY && mouseY < 150) {
     dance.play();
     will.stop();
     imevri.stop();
+    velocidadT = 4
     headR = 42
     headG = 202
     headB = 165
+  
+    ran3 = 100
+    ran4 = 255
+    ran1 = ran5 = 0
+    ran2 = ran6 = 100
+    frame = 50
+    loop()
 
 
 
@@ -143,9 +187,18 @@ function mousePressed() {
     will.play();
     imevri.stop();
     dance.stop();
+    velocidadT = 1
     headR = 202
     headG = 165
     headB = 42
+
+    ran5 = 0
+    ran6 = 255
+    ran1 = 180
+    ran2 = 255
+    ran3 = ran4 = 255
+    frame = 40
+    loop()
 
   } else {
     will.stop();
@@ -154,7 +207,10 @@ function mousePressed() {
     headR = 255
     headG = 255
     headB = 255
-
+    velocidadT = 0.8
+ frame = 60
+    ran1 = ran2 = ran3 = ran4 = ran5 = ran6 = 255
+    loop()
 
   }
 
